@@ -9,4 +9,5 @@ Node (express), and MongoDB.
 The complete returned data records look something like this:
 
 > { "_id" : ObjectId("51a ... 6d5"), "title" : "Thing One", "sid" : 1 }
+
 > { "_id" : ObjectId("51a ... 6d6"), "title" : "Thing Two", "sid" : 2 }
