@@ -1,12 +1,12 @@
 ember-data-test
 ===============
 
-*Ember Data Test Project*
+# Ember Data Test Project #
 
 This project exists simply to showcase the fundamentals of using Ember, Ember Data,
 Node (express), and MongoDB.
 
-*Prerequisites*
+## Prerequisites ##
 
 The project assumes you have
 
@@ -14,7 +14,7 @@ The project assumes you have
 - MongoDB installed.
 - Nothing listening on port 3000
 
-*Run*
+## Run ##
 
 > npm install
 
@@ -22,7 +22,7 @@ then
 
 > node server
 
-*Data*
+## Data ##
 
 Assume the individual returned data records look something like this:
 
