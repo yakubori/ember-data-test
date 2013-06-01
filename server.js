@@ -1,33 +1,47 @@
-var express = require('express'),
-    app = express(),
-    mongo = require('mongodb'),
+/*
+
+Let's load up our dependencies: express and mongdodb.
+
+Also, we'll set some useful variables.
+
+*/
+var express   = require('express'),
+    mongo     = require('mongodb'),
+    app       = express(),
+    port      = 3000,
     mongoServ = new mongo.Server('localhost', 27017, {auto_reconnect: true}),
-    stuff = new mongo.Db('stuff', mongoServ),
-    port = 3000;
+    stuff     = new mongo.Db('stuff', mongoServ);
 
-// Simple config since this is just a demo.
+/*
+
+Simple config since this is just a demo. There's much more available as your express
+application grows: sessions, logging, etc.
+
+*/
 app.configure(function() {
-  app.use(express.logger('dev'));
-  app.use(express.static(__dirname + '/public'));
-  app.use(express.bodyParser());
-});
 
-app.get('/', function(req, res) {
-  
-  var body = "Hi there!";
+  // Where our static content lives: the public directory, within our current directory.
+  app.use( express.static(__dirname+'/public') );
 
-  res.setHeader('Content-type', 'text/plain');
-  res.setHeader('Content-length', body.length);
-  res.end(body);
+  /*
+
+  NOTE: We have an index.html file living inside of our public/ directory, which express
+  will use that by default!
+
+  */
 
 });
 
+/*
+
+But this is really what we want to see: data from MongoDB, served up to Ember/Ember Data.
+
+*/
 app.get('/things', function(req, res) {
   
   // Get data and return; easy, right?
-  var things = stuff.collection('things');
-
-  var cursor = things.find();
+  var things = stuff.collection('things'),
+      cursor = things.find();
 
   cursor.toArray(function(err, docs) {
     
@@ -35,11 +49,13 @@ app.get('/things', function(req, res) {
       return res.json(500, { error: 'FAIL: '+err });
     }
 
+    // JSON is a pretty standard return type for this case.
     return res.json(200, { things: docs });
   
   });
 
 });
 
+// Of course, last but not least, we need our server to listen to requests. :)
 app.listen(port);
 console.log('Listening on port '+port);
